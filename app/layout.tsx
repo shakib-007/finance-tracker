@@ -33,7 +33,7 @@ export default function RootLayout({
         <Navbar />
 
         {/* Page content with padding */}
-        <main className="container mx-auto px-40 py-8">{children}</main>
+        <main className="container mx-auto px-40 py-8 border-2 border-gray-300 rounded-lg p-6 bg-gradient-to-r from-cyan-200 to-red-100 shadow-md">{children}</main>
 
         {/* Footer (optional) */}
         <footer className="bg-gray-100 text-center py-4 text-sm text-gray-500">
