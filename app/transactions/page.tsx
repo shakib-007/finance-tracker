@@ -1,8 +1,44 @@
+'use client';
+
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Pagination from '../components/Pagination'
 
+const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+interface Transaction {
+    id: number;
+    date: string;
+    description: string;
+    category: string;
+    amount: number | string;
+}
+
 export default function Transactions() {
+
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(10);
+  const [total, setTotal] = useState<number>(0);
+
+  const [category, setCategory] = useState<string>("");
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+        try {
+          const res = await fetch(`${API_URL}/transactions?_page=${page}&_per_page=${limit}&category=${category}`);
+          const data = await res.json();
+          setTotal(data.items);
+          setTransactions(data?.data || []);
+        } catch (err) {
+          console.error("Failed to fetch transactions:", err);
+        }
+    };
+  
+    fetchTransactions();
+  }, [page, limit, category]);
+
+  console.log(total);
   return (
     <div>
         <div className='flex justify-between mb-4'>
@@ -27,7 +63,12 @@ export default function Transactions() {
         <div className='mb-4'>
           <select
             name='category'
-            className="border border-gray-300 rounded-lg p-3"
+            className="border border-gray-300 bg-indigo-100 rounded-lg p-3"
+            value={category}
+            onChange={(e) => {
+                setCategory(e.target.value);
+                setPage(1);
+            }}
           >
             <option value="">Filter by Category</option>
             <option value="Food">Food</option>
@@ -42,46 +83,44 @@ export default function Transactions() {
             <table className='min-w-full  text-sm text-left'>
                 <thead className='bg-gray-100 text-gray-700 uppercase'>
                     <tr>
-                        <th className='py-2'>Date</th>
-                        <th className='py-2'>Description</th>
-                        <th className='py-2'>Category</th>
-                        <th className='py-2'>Amount</th>
-                        <th className='py-2'>Action</th>
+                        <th className='py-3 pl-3'>Date</th>
+                        <th className='py-3'>Description</th>
+                        <th className='py-3'>Category</th>
+                        <th className='py-3'>Amount</th>
+                        <th className='py-3'>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td className='py-2'>2023-10-01</td>
-                        <td>Salary</td>
-                        <td>Income</td>
-                        <td>$5,000.00</td>
-                        <td>
-                            <Link href='/transactions/edit' className='bg-blue-500 text-white px-4 py-2 me-1 rounded-lg hover:bg-cyan-600 transition duration-200'>
-                                Edit
-                            </Link>
+                    {transactions.map((transaction) => (
+                        <tr key={transaction.id}>
+                            <td className='p-3'>{transaction.date}</td>
+                            <td>{transaction.description}</td>
+                            <td>{transaction.category}</td>
+                            <td>${transaction.amount}</td>
+                            <td>
+                                <Link href='/transactions/edit' className='bg-blue-500 text-white px-4 py-2 me-1 rounded-lg hover:bg-cyan-600 transition duration-200'>
+                                    Edit
+                                </Link>
 
-                            <button
-                                type='button'
-                                className='bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200'
-                            >
-                                Delete
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className='py-2'>2023-10-05</td>
-                        <td>Groceries</td>
-                        <td>Food</td>
-                        <td>$200.00</td>
-                        <td>
-
-                        </td>
-                    </tr>
-                    {/* Add more transactions as needed */}
+                                <button
+                                    type='button'
+                                    className='bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200'
+                                >
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
             <div>
-                <Pagination />
+                <Pagination 
+                    totalItems={total} // Replace with the actual total items count from your API
+                    itemsPerPage={limit}
+                    currentPage={page}
+                    setPage={setPage}
+                    setLimit={setLimit} // Add this line to pass setLimit to Pagination
+                />
             </div>
             
         </div>
