@@ -40,13 +40,30 @@ export default function AddTransactions() {
       amount: Yup.number().required("Amount is required"),
     }),
 
-    onSubmit: (values: Transaction) => {
-      const formData = new FormData();
+    onSubmit: async (values: Transaction) => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/transactions`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
+    
+        if (!response.ok) {
+          throw new Error("Failed to submit data");
+        }
+    
+        const data = await response.json();
+        console.log("Successfully submitted:", data);
+        resetForm(); // clear the form
+      } catch (error) {
+        console.error("Error submitting form:", error);
+      }
       console.log(values);
     },
   });
 
-  console.log(process.env.NEXT_PUBLIC_API_BASE_URL);
   return (
     <div>
       <div className="text-center">
