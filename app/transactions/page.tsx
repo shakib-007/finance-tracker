@@ -50,7 +50,7 @@ export default function Transactions() {
     <div>
         <div className='flex justify-between mb-4'>
             <div>
-                <h1 className='text-2xl mb-2'>Transactions List</h1>
+                <h1 className='text-2xl font-bold mb-2'>Transactions List</h1>
             </div>
 
             <div>

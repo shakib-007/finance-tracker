@@ -84,11 +84,11 @@ export default function EditTransaction({ params }: { params: Promise<{ id: stri
   return (
     <div>
       <div className="text-center">
-        <h1 className="text-2xl mb-2">Update Transaction</h1>
+        <h1 className="text-2xl font-bold mb-2">Update Transaction</h1>
       </div>
       <form
         onSubmit={handleSubmit}
-        className="max-w-md mx-auto p-6 border border-gray-300 bg-white shadow-md rounded-lg space-y-4"
+        className="max-w-md mx-auto p-6 border border-gray-300 bg-blue-50 shadow-md rounded-lg space-y-4"
       >
         <div className="flex flex-col">
           <label htmlFor="category" className="mb-2">

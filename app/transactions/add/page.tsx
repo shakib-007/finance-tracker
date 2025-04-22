@@ -64,11 +64,11 @@ export default function AddTransactions() {
   return (
     <div>
       <div className="text-center">
-        <h1 className="text-2xl mb-2">Add Transaction</h1>
+        <h1 className="text-2xl font-bold mb-2">Add Transaction</h1>
       </div>
       <form
         onSubmit={handleSubmit}
-        className="max-w-md mx-auto p-6 border border-gray-300 bg-white shadow-md rounded-lg space-y-4"
+        className="max-w-md mx-auto p-6 border border-gray-300 bg-blue-50 shadow-md rounded-lg space-y-4"
       >
         <div className="flex flex-col">
           <label htmlFor="category" className="mb-2">
@@ -112,6 +112,7 @@ export default function AddTransactions() {
           <input
             type="number"
             className="border border-gray-300 rounded-lg p-2"
+            placeholder="Enter amount"
             {...getFieldProps("amount")}
           />
           {touched.amount && errors.amount && (
@@ -126,6 +127,7 @@ export default function AddTransactions() {
           <input
             type="text"
             className="border border-gray-300 rounded-lg p-2"
+            placeholder="Description of the transaction"
             {...getFieldProps("description")}
           />
 
