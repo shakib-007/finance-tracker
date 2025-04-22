@@ -11,46 +11,16 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const transactions = [
-  {
-    id: "1",
-    description: "Grocery shopping",
-    amount: -50.25,
-    category: "Food",
-    date: "2025-04-01",
-  },
-  {
-    id: "2",
-    description: "Monthly salary",
-    amount: 3000,
-    category: "Salary",
-    date: "2025-04-02",
-  },
-  {
-    id: "3",
-    description: "Dinner",
-    amount: -25,
-    category: "Food",
-    date: "2025-04-03",
-  },
-  {
-    id: "4",
-    description: "Freelance payment",
-    amount: 500,
-    category: "Salary",
-    date: "2025-04-04",
-  },
-  {
-    id: "5",
-    description: "Electricity bill",
-    amount: -120,
-    category: "Expenses",
-    date: "2025-04-05",
-  },
-];
 
+interface Transaction {
+  id: string;
+  description: string;
+  amount: number;
+  category: string;
+  date: string;
+}
 
-const TransactionChart = () => {
+const TransactionChart = ({ transactions }: { transactions: Transaction[] }) => {
 
   const chartData = Array.from(new Set(transactions.map((t) => t.category))).map((category) => {
     const income = transactions
