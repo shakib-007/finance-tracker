@@ -1,10 +1,8 @@
-import Image from "next/image";
 import TransactionChart from "./components/TransactionChart";
 import getAllTransactions from "@/lib/getAllTransactions";
 
 export default async function Home() {
   const transactions = await getAllTransactions();
-  console.log(transactions);
 
   const totalIncome =  transactions.reduce((sum: number, item: any) => item.amount > 0 ? sum + item.amount : sum, 0);
   const totalExpenses = transactions.reduce((sum: number, item: any) => item.amount < 0 ? sum + Math.abs(item.amount) : sum, 0);

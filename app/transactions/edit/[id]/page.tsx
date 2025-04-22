@@ -2,11 +2,13 @@
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import React from "react";
-import { redirect, useRouter } from "next/navigation";
+import React, { use, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
+
 const initialValues: Transaction = {
+  id: "",
   date: "",
   description: "",
   category: "",
@@ -15,13 +17,31 @@ const initialValues: Transaction = {
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-export default function AddTransactions() {
-  const router = useRouter()
+export default function EditTransaction({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params); 
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchTransaction = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/transactions/${id}`);
+        const data = await res.json();
+        setValues(data);
+      } catch (err) {
+        toast.error("Failed to fetch transaction. Please try again.");
+      }
+    };
+
+    fetchTransaction();
+  }, [id]);
+
   const {
     handleSubmit,
     getFieldProps,
     handleChange,
     handleBlur,
+    setValues,
     values,
     touched,
     errors,
@@ -40,8 +60,8 @@ export default function AddTransactions() {
 
     onSubmit: async (values: Transaction) => {
       try {
-        const response = await fetch(`${API_URL}/transactions`, {
-          method: "POST",
+        const response = await fetch(`${API_URL}/transactions/${values.id}`, {
+          method: "PATCH",
           headers: {
             "Content-Type": "application/json",
           },
@@ -49,13 +69,13 @@ export default function AddTransactions() {
         });
     
         if (!response.ok) {
-          throw new Error("Failed to submit data");
+          throw new Error("Failed to Update data");
         }
-        toast.success("Transaction added successfully!");
-        router.push('/transactions'); 
+        toast.success("Transaction updated successfully!");
+        router.push('/transactions');
         resetForm();
       } catch (error) {
-        toast.error("Failed to add transaction. Please try again.");
+        toast.error("Failed to update transaction. Please try again.");
         console.error("Error submitting form:", error);
       }
     },
@@ -64,7 +84,7 @@ export default function AddTransactions() {
   return (
     <div>
       <div className="text-center">
-        <h1 className="text-2xl mb-2">Add Transaction</h1>
+        <h1 className="text-2xl mb-2">Update Transaction</h1>
       </div>
       <form
         onSubmit={handleSubmit}

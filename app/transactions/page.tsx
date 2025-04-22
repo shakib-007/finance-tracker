@@ -3,42 +3,49 @@
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import Pagination from '../components/Pagination'
+import toast from 'react-hot-toast';
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-interface Transaction {
-    id: number;
-    date: string;
-    description: string;
-    category: string;
-    amount: number | string;
-}
 
 export default function Transactions() {
 
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(10);
-  const [total, setTotal] = useState<number>(0);
+    const [transactions, setTransactions] = useState<Transaction[]>([]);
+    const [page, setPage] = useState<number>(1);
+    const [limit, setLimit] = useState<number>(10);
+    const [total, setTotal] = useState<number>(0);
+    const [loading, setLoading] = useState<boolean>(false);
 
-  const [category, setCategory] = useState<string>("");
+    const [category, setCategory] = useState<string>("");
+    const [deleteStatus, setDeleteStatus] = useState<boolean>(false);
 
-  useEffect(() => {
-    const fetchTransactions = async () => {
-        try {
-          const res = await fetch(`${API_URL}/transactions?_page=${page}&_per_page=${limit}&category=${category}`);
-          const data = await res.json();
-          setTotal(data.items);
-          setTransactions(data?.data || []);
-        } catch (err) {
-          console.error("Failed to fetch transactions:", err);
-        }
-    };
-  
-    fetchTransactions();
-  }, [page, limit, category]);
+    useEffect(() => {
+        const fetchTransactions = async () => {
+            try {
+            setLoading(true);
+            const res = await fetch(`${API_URL}/transactions?_page=${page}&_per_page=${limit}&category=${category}`);
+            const data = await res.json();
+            setTotal(data.items);
+            setTransactions(data?.data || []);
+            setDeleteStatus(false);
+            } catch (err) {
+            console.error("Failed to fetch transactions:", err);
+            } finally {
+            setLoading(false);
+            }
+        };
+    
+        fetchTransactions();
+    }, [page, limit, category, deleteStatus]);
 
-  console.log(total);
+    if (loading) {
+        return (
+        <div className='flex justify-center items-center'>
+            <p>Loading.....</p>
+        </div>
+        );
+    }
+
   return (
     <div>
         <div className='flex justify-between mb-4'>
@@ -98,13 +105,25 @@ export default function Transactions() {
                             <td>{transaction.category}</td>
                             <td>${transaction.amount}</td>
                             <td>
-                                <Link href='/transactions/edit' className='bg-blue-500 text-white px-4 py-2 me-1 rounded-lg hover:bg-cyan-600 transition duration-200'>
+                                <Link href={`/transactions/edit/${transaction.id}`} className='bg-blue-500 text-white px-4 py-2 me-1 rounded-lg hover:bg-cyan-600 transition duration-200'>
                                     Edit
                                 </Link>
 
                                 <button
                                     type='button'
-                                    className='bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200'
+                                    className='bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200 cursor-pointer'
+                                    onClick={async () => {
+                                        const res = await fetch(`${API_URL}/transactions/${transaction.id}`, {
+                                            method: 'DELETE',
+                                        });
+                                        if (res.ok) {
+                                            toast.success("Transaction deleted successfully");
+                                            setDeleteStatus(true);
+                                        }
+                                        else {
+                                            toast.error("Failed to delete transaction");
+                                        }
+                                    }}
                                 >
                                     Delete
                                 </button>
