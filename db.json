@@ -1,19 +1,74 @@
 {
-    "transactions": [
-      {
-        "id": "1",
-        "description": "Grocery shopping",
-        "amount": -50.25,
-        "category": "Food",
-        "date": "2025-04-01"
-      },
-      {
-        "id": "2",
-        "description": "Monthly salary",
-        "amount": 3000,
-        "category": "Salary",
-        "date": "2025-04-02"
-      }
-    ]
-  }
-  
+  "transactions": [
+    {
+      "id": 1,
+      "description": "Grocery shopping",
+      "amount": -50.25,
+      "category": "Food",
+      "date": "2025-04-01"
+    },
+    {
+      "id": 2,
+      "description": "Monthly salary",
+      "amount": 3000,
+      "category": "Salary",
+      "date": "2025-04-02"
+    },
+    {
+      "id": 3,
+      "description": "Gym membership",
+      "amount": -35,
+      "category": "Rent",
+      "date": "2025-04-03"
+    },
+    {
+      "id": 4,
+      "description": "Dinner with friends",
+      "amount": -75.5,
+      "category": "Entertainment",
+      "date": "2025-04-04"
+    },
+    {
+      "id": 5,
+      "description": "Book purchase",
+      "amount": -20,
+      "category": "Utilities",
+      "date": "2025-04-05"
+    },
+    {
+      "id": 6,
+      "description": "Freelance project payment",
+      "amount": 500,
+      "category": "Salary",
+      "date": "2025-04-06"
+    },
+    {
+      "id": 7,
+      "description": "Car repair",
+      "amount": -150,
+      "category": "Entertainment",
+      "date": "2025-04-07"
+    },
+    {
+      "id": 8,
+      "description": "Concert tickets",
+      "amount": -120,
+      "category": "Entertainment",
+      "date": "2025-04-08"
+    },
+    {
+      "id": 9,
+      "date": "2025-04-22",
+      "description": "thivc",
+      "category": "Other",
+      "amount": -69
+    },
+    {
+      "id": "a457",
+      "date": "1999-10-10",
+      "description": "jb",
+      "category": "Salary",
+      "amount": 200
+    }
+  ]
+}
