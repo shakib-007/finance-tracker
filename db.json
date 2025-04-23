@@ -9,7 +9,7 @@
     },
     {
       "id": "2",
-      "description": "Monthly salary tye",
+      "description": "Monthly salary",
       "amount": 3000,
       "category": "Salary",
       "date": "2025-04-02"
