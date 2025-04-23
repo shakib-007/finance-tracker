@@ -16,7 +16,8 @@ const initialValues: Transaction = {
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function AddTransactions() {
-  const router = useRouter()
+  const router = useRouter();
+
   const {
     handleSubmit,
     getFieldProps,
@@ -32,13 +33,14 @@ export default function AddTransactions() {
     initialValues,
 
     validationSchema: Yup.object({
-      date: Yup.date().required("Date is required"),
-      description: Yup.string().required("Description is required"),
-      category: Yup.string().required("Category is required"),
-      amount: Yup.number().required("Amount is required"),
+      date: Yup.date().required("Date is Required!"),
+      description: Yup.string().required("Description is Required!"),
+      category: Yup.string().required("Category is Required!"),
+      amount: Yup.number().required("Amount is Required!"),
     }),
 
     onSubmit: async (values: Transaction) => {
+      
       try {
         const response = await fetch(`${API_URL}/transactions`, {
           method: "POST",
@@ -51,12 +53,15 @@ export default function AddTransactions() {
         if (!response.ok) {
           throw new Error("Failed to submit data");
         }
+
         toast.success("Transaction added successfully!");
+
         router.push('/transactions'); 
+
         resetForm();
+
       } catch (error) {
         toast.error("Failed to add transaction. Please try again.");
-        console.error("Error submitting form:", error);
       }
     },
   });
