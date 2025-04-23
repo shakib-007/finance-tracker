@@ -88,6 +88,10 @@ PATCH /transactions/:id – Update a transaction by ID.
 DELETE /transactions/:id – Delete a transaction by ID.
 
 
+## Challenges I faced 
+
+I am using JSON server for fake api. So when i use _page and _limit for pagination its working fine when page value is 1 but when i changes page value 2 its also shows page 1 value. After tried so many time then i found out that if i use _per_page then its working fine. Also Some challeges i faced during responsive the app.
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
