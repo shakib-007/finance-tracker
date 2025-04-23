@@ -35,7 +35,7 @@ const TransactionChart = ({ transactions }: { transactions: Transaction[] }) => 
   });
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+    <div className="max-w-4xl mx-auto mt-10 p-6 bg-blue-50 shadow-lg rounded-lg">
       <h2 className="text-2xl font-semibold mb-6 text-center">
         Income vs Expenses by Category
       </h2>

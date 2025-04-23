@@ -7,7 +7,6 @@ import toast from 'react-hot-toast';
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-
 export default function Transactions() {
 
     const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -70,7 +69,7 @@ export default function Transactions() {
         <div className='mb-4'>
           <select
             name='category'
-            className="border border-gray-300 bg-indigo-100 rounded-lg p-3"
+            className="border border-gray-300 bg-gray-100 rounded-lg p-3"
             value={category}
             onChange={(e) => {
                 setCategory(e.target.value);
@@ -86,11 +85,13 @@ export default function Transactions() {
             <option value="Other">Other</option>
           </select>
         </div>
-        <div className='overflow-x-auto bg-white'>
+
+        <div className='overflow-x-auto'>
             <table className='min-w-full  text-sm text-left'>
-                <thead className='bg-gray-100 text-gray-700 uppercase'>
+                <thead className='bg-gray-200 text-black uppercase'>
                     <tr>
-                        <th className='py-3 pl-3'>Date</th>
+                        <th className='py-3 pl-3'>Sl.</th>
+                        <th className='py-3'>Date</th>
                         <th className='py-3'>Description</th>
                         <th className='py-3'>Category</th>
                         <th className='py-3'>Amount</th>
@@ -98,12 +99,13 @@ export default function Transactions() {
                     </tr>
                 </thead>
                 <tbody>
-                    {transactions.map((transaction) => (
-                        <tr key={transaction.id}>
-                            <td className='p-3'>{transaction.date}</td>
+                    {transactions.map((transaction, index: number) => (
+                        <tr key={transaction.id} className={index % 2 === 0 ?  'bg-white' : 'bg-gray-100' }>
+                            <td className='p-3'>{index + 1}</td>
+                            <td>{transaction.date}</td>
                             <td>{transaction.description}</td>
                             <td>{transaction.category}</td>
-                            <td>${transaction.amount}</td>
+                            <td>৳{transaction.amount}</td>
                             <td>
                                 <Link href={`/transactions/edit/${transaction.id}`} className='bg-blue-500 text-white px-4 py-2 me-1 rounded-lg hover:bg-cyan-600 transition duration-200'>
                                     Edit
@@ -132,13 +134,14 @@ export default function Transactions() {
                     ))}
                 </tbody>
             </table>
+
             <div>
                 <Pagination 
-                    totalItems={total} // Replace with the actual total items count from your API
+                    totalItems={total}
                     itemsPerPage={limit}
                     currentPage={page}
                     setPage={setPage}
-                    setLimit={setLimit} // Add this line to pass setLimit to Pagination
+                    setLimit={setLimit}
                 />
             </div>
             
