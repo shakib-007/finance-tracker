@@ -35,22 +35,27 @@ const TransactionChart = ({ transactions }: { transactions: Transaction[] }) => 
   });
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-6 bg-blue-50 shadow-lg rounded-lg">
-      <h2 className="text-2xl font-semibold mb-6 text-center">
-        Income vs Expenses by Category
-      </h2>
+    <div className="w-full px-4 sm:px-6 lg:px-8 mt-10">
+      <div className="max-w-4xl mx-auto p-4 sm:p-6 bg-blue-50 shadow-lg rounded-lg">
+        <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 text-center">
+          Income vs Expenses by Category
+        </h2>
 
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={chartData}>
-          <XAxis dataKey="category" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="Income" fill="#4ade80" />
-          <Bar dataKey="Expense" fill="#f87171" />
-        </BarChart>
-      </ResponsiveContainer>
+        <div className="w-full h-72 sm:h-80">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={chartData}>
+              <XAxis dataKey="category" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="Income" fill="#4ade80" />
+              <Bar dataKey="Expense" fill="#f87171" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
     </div>
+
   );
 };
 

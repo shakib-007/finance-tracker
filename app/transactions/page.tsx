@@ -46,7 +46,7 @@ export default function Transactions() {
     }
 
   return (
-    <div>
+    <div >
         <div className='flex justify-between mb-4'>
             <div>
                 <h1 className='text-2xl font-bold mb-2'>Transactions List</h1>
@@ -106,7 +106,7 @@ export default function Transactions() {
                             <td>{transaction.description}</td>
                             <td>{transaction.category}</td>
                             <td>৳{transaction.amount}</td>
-                            <td>
+                            <td className="flex flex-col sm:flex-row gap-2 mt-2 sm:mt-1">
                                 <Link href={`/transactions/edit/${transaction.id}`} className='bg-blue-500 text-white px-4 py-2 me-1 rounded-lg hover:bg-cyan-600 transition duration-200'>
                                     Edit
                                 </Link>

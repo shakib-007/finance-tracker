@@ -27,14 +27,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Toaster position="top-right" />
 
         <Navbar />
 
-        <main className="container mx-auto px-40 py-8  p-6 bg-gradient-to-r from-cyan-300 to-yellow-200 shadow-md">{children}</main>
+        <main className="container mx-auto px-4 sm:px-6 lg:px-20 py-8 bg-gradient-to-r from-cyan-300 to-yellow-200 shadow-md">
+          {children}
+        </main>
 
         <footer className="bg-teal-100 text-center py-4 text-sm text-gray-500">
           &copy; {new Date().getFullYear()} Finance Tracker. All rights reserved.
